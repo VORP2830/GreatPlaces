@@ -35,21 +35,29 @@ class PlacesListPage extends StatelessWidget {
                 child: const Center(
                   child: Text('Nenhum local cadastrado'),
                 ),
-                builder: (ctx, gratePlaces, child) =>
-                    gratePlaces.itemsCount == 0
-                        ? child!
-                        : ListView.builder(
-                            itemCount: gratePlaces.itemsCount,
-                            itemBuilder: (ctx, i) => ListTile(
-                              leading: CircleAvatar(
-                                backgroundImage: FileImage(
-                                  gratePlaces.getItemByIndex(i).image,
-                                ),
-                              ),
-                              title: Text(gratePlaces.getItemByIndex(i).title),
-                              onTap: () {},
+                builder: (ctx, gratePlaces, child) => gratePlaces.itemsCount ==
+                        0
+                    ? child!
+                    : ListView.builder(
+                        itemCount: gratePlaces.itemsCount,
+                        itemBuilder: (ctx, i) => ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: FileImage(
+                              gratePlaces.getItemByIndex(i).image,
                             ),
                           ),
+                          title: Text(gratePlaces.getItemByIndex(i).title),
+                          subtitle: Text(
+                            gratePlaces.getItemByIndex(i).location!.address!,
+                          ),
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                              AppRoutes.PLACE_DETAIL,
+                              arguments: gratePlaces.getItemByIndex(i),
+                            );
+                          },
+                        ),
+                      ),
               ),
       ),
     );
